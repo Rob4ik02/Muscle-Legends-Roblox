@@ -548,7 +548,7 @@ return function(Env)
         local machineSection = GymTab:CreateSection(gymInfo.Name)
 
         -- 1. Bench Press
-        machineSection:CreateToggle({
+        local Toggle1 = GymTab:CreateToggle({
             Name = "Auto Bench Press",
             CurrentValue = false,
             Flag = "Toggle_ManualBench_" .. gymInfo.Code,
@@ -576,7 +576,7 @@ return function(Env)
         })
 
         -- 2. Deadlift
-        machineSection:CreateToggle({
+        local Toggle2 = GymTab:CreateToggle({
             Name = "Auto Deadlift",
             CurrentValue = false,
             Flag = "Toggle_ManualDeadlift_" .. gymInfo.Code,
@@ -604,7 +604,7 @@ return function(Env)
         })
 
         -- 3. PullUps
-        machineSection:CreateToggle({
+        local Toggle3 = GymTab:CreateToggle({
             Name = "Auto PullUps",
             CurrentValue = false,
             Flag = "Toggle_ManualPullUps_" .. gymInfo.Code,
@@ -632,7 +632,7 @@ return function(Env)
         })
 
         -- 4. Squat Rack
-        machineSection:CreateToggle({
+        local Toggle4 = GymTab:CreateToggle({
             Name = "Auto Squat Rack",
             CurrentValue = false,
             Flag = "Toggle_ManualSquat_" .. gymInfo.Code,
@@ -660,7 +660,7 @@ return function(Env)
         })
 
         -- 5. Boulder Throw
-        machineSection:CreateToggle({
+        local Toggle5 = GymTab:CreateToggle({
             Name = "Auto Boulder Throw",
             CurrentValue = false,
             Flag = "Toggle_ManualBoulder_" .. gymInfo.Code,
@@ -697,7 +697,7 @@ return function(Env)
     local rockSection = GymTab:CreateSection("Rock Farming")
 
     -- Выпадающий список для выбора камня[reference:4]
-    rockSection:CreateDropdown({
+    local Toggle6 = GymTab:CreateDropdown({
         Name = "Select Rock Name",
         Options = rockNames,
         CurrentOption = {selectedRockTier},
@@ -707,7 +707,7 @@ return function(Env)
         end
     })
 
-    rockSection:CreateToggle({
+    local Toggle7 = GymTab:CreateToggle({
         Name = "Auto Rock Farm",
         CurrentValue = false,
         Flag = "Toggle_AutoRockFarm",
@@ -741,7 +741,7 @@ return function(Env)
     -- Секция: Auto Lift
     local liftSection = LiftingTab:CreateSection("Lifting")
 
-    liftSection:CreateToggle({
+    local Toggle8 = LiftingTab:CreateToggle({
         Name = "Auto Lift",
         CurrentValue = false,
         Flag = "Toggle_AutoLift",
@@ -781,7 +781,7 @@ return function(Env)
     local equipSection = LiftingTab:CreateSection("Auto Equip")
 
     -- Weight
-    equipSection:CreateToggle({
+    local Toggle9 = LiftingTab:CreateToggle({
         Name = "Auto Equip Weight",
         CurrentValue = false,
         Flag = "Toggle_AutoEquipWeight",
@@ -818,7 +818,7 @@ return function(Env)
     })
 
     -- Pushups
-    equipSection:CreateToggle({
+    local Toggle10 = LiftingTab:CreateToggle({
         Name = "Auto Equip Pushups",
         CurrentValue = false,
         Flag = "Toggle_AutoEquipPushups",
@@ -855,7 +855,7 @@ return function(Env)
     })
 
     -- Situps
-    equipSection:CreateToggle({
+    local Toggle11 = LiftingTab:CreateToggle({
         Name = "Auto Equip Situps",
         CurrentValue = false,
         Flag = "Toggle_AutoEquipSitups",
@@ -892,7 +892,7 @@ return function(Env)
     })
 
     -- Handstands
-    equipSection:CreateToggle({
+    local Toggle12 = LiftingTab:CreateToggle({
         Name = "Auto Equip Handstands",
         CurrentValue = false,
         Flag = "Toggle_AutoEquipHandstands",
@@ -966,42 +966,42 @@ return function(Env)
         end
     end
 
-    speedSection:CreateToggle({
+    local Toggle1 = LiftingTab:CreateToggle({
         Name = "Fast Punch Speed",
         CurrentValue = false,
         Flag = "Toggle_FastPunch",
         Callback = setToolSpeed("Punch", "attackTime", 0.05, 0.35)
     })
 
-    speedSection:CreateToggle({
+    local Toggle2 = LiftingTab:CreateToggle({
         Name = "Fast Weight Speed",
         CurrentValue = false,
         Flag = "Toggle_FastWeight",
         Callback = setToolSpeed("Weight", "repTime", 0.05, 1)
     })
 
-    speedSection:CreateToggle({
+    local Toggle3 = LiftingTab:CreateToggle({
         Name = "Fast Pushups Speed",
         CurrentValue = false,
         Flag = "Toggle_FastPushups",
         Callback = setToolSpeed("Pushups", "repTime", 0.05, 1)
     })
 
-    speedSection:CreateToggle({
+    local Toggle4 = LiftingTab:CreateToggle({
         Name = "Fast Situps Speed",
         CurrentValue = false,
         Flag = "Toggle_FastSitups",
         Callback = setToolSpeed("Situps", "repTime", 0.05, 1)
     })
 
-    speedSection:CreateToggle({
+    local Toggle5 = LiftingTab:CreateToggle({
         Name = "Fast Handstands Speed",
         CurrentValue = false,
         Flag = "Toggle_FastHandstands",
         Callback = setToolSpeed("Handstands", "repTime", 0.05, 1)
     })
 
-    speedSection:CreateToggle({
+    local Toggle6 = LiftingTab:CreateToggle({
         Name = "Fast Ground Slam Speed",
         CurrentValue = false,
         Flag = "Toggle_FastGroundSlam",
