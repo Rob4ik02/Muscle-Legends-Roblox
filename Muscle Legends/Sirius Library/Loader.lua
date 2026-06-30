@@ -43,12 +43,13 @@ end
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-playInterfaceSound("LoadingSound")
 
 
 task.wait(3)
 
-playInterfaceSound("LoadedSound")
+playInterfaceSound("LoadingSound")
+
+
 
 print(" OXYGEN SYSTEM: Welcome to console! The Script is loading now..")
 warn(" OXYGEN SYSTEM: The script can maybe not loaded if your exploit not strong possible!")
@@ -67,8 +68,6 @@ local Window = Rayfield:CreateWindow({
 
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = false, -- Prevents Rayfield from emitting warnings when the script has a version mismatch with the interface.
-
-   -- ScriptID = "sid_xxxxxxxxxxxx", -- Your Script ID from developer.sirius.menu — enables analytics, managed keys, and script hosting
 
    ConfigurationSaving = {
       Enabled = true,
@@ -89,29 +88,30 @@ local Window = Rayfield:CreateWindow({
 
 local Tabs = {
     Home = Window:CreateTab("Home", "layout-panel-left"),
-    Main = Window:CreateTab("Main", "menu"),
+    Gym = Window:CreateTab("Gym", "dumbbell"),
+    Lifting = Window:CreateTab("Lifting", "brain"),
     Auto = Window:CreateTab("Automation", "repeat"),
     Shop = Window:CreateTab("Shop", "shopping-cart"),
     Kill = Window:CreateTab("Kill", "skull"),
     Status = Window:CreateTab("Status", "info"),
     Misc = Window:CreateTab("Miscellaneous", "layout-dashboard"),
+    KeySystem = Window:CreateTab("Key System", "key"),
     Settings = Window:CreateTab("Settings", "cog")
 }
 
 -- =============================================================================
 -- ENVIRONMENT (УПАКОВКА ДАННЫХ ДЛЯ ДРУГИХ ФАЙЛОВ)
 -- =============================================================================
--- Мы передаём этот Env в другие файлы, чтобы они знали, куда рисовать UI
 
 local Env = {
     LibraryUi = LibraryUi,
-    Notifier = Notifier,
     Window = Window,
     Tabs = Tabs,
     player = player,
     RS = RS,
     rEvents = rEvents,
-    playInterfaceSound = playInterfaceSound
+    playInterfaceSound = playInterfaceSound,
+    Rayfield = Rayfield
 }
 
 -- =============================================================================
@@ -146,71 +146,15 @@ local function loadExternalModule(url, env)
     end
 end
 
+wait(1)
+print(" OXYGEN SYSTEM: Loading External Module 'VerifyPlayer.lua'")
+loadExternalModule("https://raw.githubusercontent.com/Rob4ik02/Muscle-Legends-Roblox/refs/heads/main/Muscle%20Legends/Sirius%20Library/GymFarm.lua", Env)
+
+playInterfaceSound("LoadedSound")
+
+
 playInterfaceSound("NotificationSound")
 
-local Label1 = Tabs.Home:CreateLabel("Updates & News", "newspaper")
-
-local ParagraphUpdates1 = Tabs.Home:CreateParagraph({
-    Title = "UPDATES",
-    Content = [[
-    Version 1.0.0:
-      + New ui library added 
-      + Better security
-      + More functions
-        ]]
-})
-
-local ParagraphNews1 = Tabs.Home:CreateParagraph({
-    Title = "NEWS",
-    Content = [[
-    News 1:
-      We upgraded the script!
-        ]]
-})
-
-local Label2 = Tabs.Home:CreateLabel("FAQ & Information", "badge-info")
-
-local ParagraphFAQ1 = Tabs.Home:CreateParagraph({
-    Title = "FAQ",
-    Content = [[
-    ( 1 ): Why the script is not working on other exploits?
-      Answer:
-        If it doesn't work, the exploit is not capable of supporting 
-        a script that uses more complex details.
-      Answer 2:
-        Either the exploit is outdated and 
-        does not work on current versions.
-      Answer 3:
-        The script works with the following exploits:
-        Delta, JJsploit, Velocity, Arceus x neo
-
-    ( 2 ): Why devs used this library Ui?
-      Answer:
-        The ui library is very easy to use and has a lot of features
-        that can be used to create
-        a great ui for the script.
-        ]]
-})
-
-local Label3 = Tabs.Home:CreateLabel("I wanted to", "heart")
-
-local ParagraphSTT1 = Tabs.Home:CreateParagraph({
-    Title = "special thanks to:",
-    Content = [[
-    Gemini - for helping in the development of the script and ui library
-    Sirius - for creating the ui library
-    ]]
-})
-
-local Label4 = Tabs.Home:CreateLabel("Key System", "key-round")
-
-local ParagraphKey1 = Tabs.Home:CreateParagraph({
-    Title = "Key Time Status:",
-    Content = [[
-    The key is lifetime, cuz the script in
-    the development stage, and the devs want to add more features in the future.
-        ]]
-})
 
 Rayfield:Notify({
    Title = "Oxygen Hub",
