@@ -950,15 +950,6 @@ return function(Env)
                 return
             end
             local repTime = item:FindFirstChild(valueName)
-            if not repTime then
-                playInterfaceSound("ErrorSound")
-                Notifier({
-                    Title = "Error",
-                    Content = "'" .. valueName .. "' not found in " .. toolName .. "!",
-                    Duration = 4
-                })
-                return
-            end
             repTime.Value = v and enabledValue or disabledValue
             playInterfaceSound("NotificationSound")
             Notifier({
