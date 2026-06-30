@@ -1,18 +1,11 @@
 return function(Env)
-    local AutoTab = Env.Tabs.Auto
-    local HomeTab = Env.Tabs.Home
-    local ShopTab = Env.Tabs.Shop
-    local StatusTab = Env.Tabs.Status
-    local SettingsTab = Env.Tabs.Settings
-    local MiscTab = Env.Tabs.Misc
     local GymTab = Env.Tabs.Gym
     local LiftingTab = Env.Tabs.Lifting
     local player = Env.player
     local playInterfaceSound = Env.playInterfaceSound
-    local Notifier = Env.Notifier
     local RS = Env.RS
     local rEvents = Env.rEvents
-    local Rayfield = Env.Rayfield  -- <-- убрана лишняя запятая
+    local Rayfield = Env.Rayfield  -- получаем Rayfield из окружения
 
     print("Cloud Oxygen Hub: Loading GymFarm.Lua")
 
@@ -420,10 +413,9 @@ return function(Env)
     }
 
     for _, gymInfo in ipairs(GymsList) do
-        -- Заголовок для каждого зала
         GymTab:CreateSection(gymInfo.Name)
 
-        -- 1. Bench Press
+        -- Bench Press
         GymTab:CreateToggle({
             Name = "Auto Bench Press",
             CurrentValue = false,
@@ -432,14 +424,14 @@ return function(Env)
                 AutoBenchActive = v
                 playInterfaceSound("NotificationSound")
                 if v then
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Bench Press (" .. gymInfo.Name .. ") Enabled!",
                         Duration = 3
                     })
                     StartManualBenchFarm(gymInfo.Code)
                 else
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Bench Press (" .. gymInfo.Name .. ") Disabled!",
                         Duration = 3
@@ -451,7 +443,7 @@ return function(Env)
             end
         })
 
-        -- 2. Deadlift
+        -- Deadlift
         GymTab:CreateToggle({
             Name = "Auto Deadlift",
             CurrentValue = false,
@@ -460,14 +452,14 @@ return function(Env)
                 AutoDeadliftActive = v
                 playInterfaceSound("NotificationSound")
                 if v then
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Deadlift (" .. gymInfo.Name .. ") Enabled!",
                         Duration = 3
                     })
                     StartManualDeadliftFarm(gymInfo.Code)
                 else
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Deadlift (" .. gymInfo.Name .. ") Disabled!",
                         Duration = 3
@@ -479,7 +471,7 @@ return function(Env)
             end
         })
 
-        -- 3. PullUps
+        -- PullUps
         GymTab:CreateToggle({
             Name = "Auto PullUps",
             CurrentValue = false,
@@ -488,14 +480,14 @@ return function(Env)
                 AutoPullUpsActive = v
                 playInterfaceSound("NotificationSound")
                 if v then
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "PullUps (" .. gymInfo.Name .. ") Enabled!",
                         Duration = 3
                     })
                     StartManualPullUpsFarm(gymInfo.Code)
                 else
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "PullUps (" .. gymInfo.Name .. ") Disabled!",
                         Duration = 3
@@ -507,7 +499,7 @@ return function(Env)
             end
         })
 
-        -- 4. Squat Rack
+        -- Squat Rack
         GymTab:CreateToggle({
             Name = "Auto Squat Rack",
             CurrentValue = false,
@@ -516,14 +508,14 @@ return function(Env)
                 AutoSquatActive = v
                 playInterfaceSound("NotificationSound")
                 if v then
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Squat Rack (" .. gymInfo.Name .. ") Enabled!",
                         Duration = 3
                     })
                     StartManualSquatFarm(gymInfo.Code)
                 else
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Squat Rack (" .. gymInfo.Name .. ") Disabled!",
                         Duration = 3
@@ -535,7 +527,7 @@ return function(Env)
             end
         })
 
-        -- 5. Boulder Throw
+        -- Boulder Throw
         GymTab:CreateToggle({
             Name = "Auto Boulder Throw",
             CurrentValue = false,
@@ -544,14 +536,14 @@ return function(Env)
                 AutoBoulderActive = v
                 playInterfaceSound("NotificationSound")
                 if v then
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Boulder Throw (" .. gymInfo.Name .. ") Enabled!",
                         Duration = 3
                     })
                     StartManualBoulderFarm(gymInfo.Code)
                 else
-                    Notifier({
+                    Rayfield:Notify({
                         Title = "Gym Farm",
                         Content = "Boulder Throw (" .. gymInfo.Name .. ") Disabled!",
                         Duration = 3
@@ -567,12 +559,11 @@ return function(Env)
     print("Cloud Oxygen Hub: 4 / 5 GymFarm.Lua")
 
     -- =============================================================================
-    -- ИНТЕРФЕЙС: ROCK FARMING (ВКЛАДКА GYM)
+    -- ROCK FARMING
     -- =============================================================================
 
     GymTab:CreateSection("Rock Farming")
 
-    -- Выпадающий список для выбора камня
     GymTab:CreateDropdown({
         Name = "Select Rock Name",
         Options = rockNames,
@@ -591,14 +582,14 @@ return function(Env)
             AutoRockFarmActive = v
             playInterfaceSound("NotificationSound")
             if v then
-                Notifier({
+                Rayfield:Notify({
                     Title = "Rock Farm",
                     Content = "Rock Farm Enabled! Target: " .. selectedRockTier,
                     Duration = 3
                 })
                 StartRockFarm()
             else
-                Notifier({
+                Rayfield:Notify({
                     Title = "Rock Farm",
                     Content = "Rock Farm Disabled!",
                     Duration = 3
@@ -611,10 +602,9 @@ return function(Env)
     })
 
     -- =============================================================================
-    -- ИНТЕРФЕЙС: ВКЛАДКА LIFTING
+    -- LIFTING TAB
     -- =============================================================================
 
-    -- Секция: Auto Lift
     LiftingTab:CreateSection("Lifting")
 
     LiftingTab:CreateToggle({
@@ -626,7 +616,7 @@ return function(Env)
             local gamepass_AutoLift = player:FindFirstChild("autoLiftEnabled")
             if not gamepass_AutoLift then
                 playInterfaceSound("ErrorSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Error",
                     Content = "Failed to find Auto Lift object in Player. Feature may not work.",
                     Duration = 6
@@ -636,7 +626,7 @@ return function(Env)
             if v then
                 gamepass_AutoLift.Value = true
                 playInterfaceSound("NotificationSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Notification",
                     Content = "Auto Lift has been enabled!",
                     Duration = 3
@@ -644,7 +634,7 @@ return function(Env)
             else
                 gamepass_AutoLift.Value = false
                 playInterfaceSound("NotificationSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Notification",
                     Content = "Auto Lift has been Disabled!",
                     Duration = 3
@@ -653,7 +643,6 @@ return function(Env)
         end
     })
 
-    -- Секция: Auto Equip
     LiftingTab:CreateSection("Auto Equip")
 
     -- Weight
@@ -666,7 +655,7 @@ return function(Env)
             AutoEquipWeightActive = v
             if v then
                 playInterfaceSound("NotificationSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Equipment",
                     Content = "Auto Equip Weight Started!",
                     Duration = 3
@@ -703,7 +692,7 @@ return function(Env)
             AutoEquipPushupsActive = v
             if v then
                 playInterfaceSound("NotificationSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Equipment",
                     Content = "Auto Equip Pushups Started!",
                     Duration = 3
@@ -740,7 +729,7 @@ return function(Env)
             AutoEquipSitupsActive = v
             if v then
                 playInterfaceSound("NotificationSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Equipment",
                     Content = "Auto Equip Situps Started!",
                     Duration = 3
@@ -777,7 +766,7 @@ return function(Env)
             AutoEquipHandstandsActive = v
             if v then
                 playInterfaceSound("NotificationSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Equipment",
                     Content = "Auto Equip Handstands Started!",
                     Duration = 3
@@ -804,10 +793,9 @@ return function(Env)
         end
     })
 
-    -- Секция: Rep Time Editor (скорость инструментов)
+    -- Rep Time Editor
     LiftingTab:CreateSection("Rep Time Editor")
 
-    -- Вспомогательная функция для изменения скорости
     local function setToolSpeed(toolName, valueName, enabledValue, disabledValue)
         return function(v)
             playInterfaceSound("ButtonClick")
@@ -815,7 +803,7 @@ return function(Env)
             local item = character:FindFirstChild(toolName) or player:WaitForChild("Backpack"):FindFirstChild(toolName)
             if not item then
                 playInterfaceSound("ErrorSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Error",
                     Content = "Item '" .. toolName .. "' not found in inventory or hands!",
                     Duration = 4
@@ -825,7 +813,7 @@ return function(Env)
             local repTime = item:FindFirstChild(valueName)
             if not repTime then
                 playInterfaceSound("ErrorSound")
-                Notifier({
+                Rayfield:Notify({
                     Title = "Error",
                     Content = "'" .. valueName .. "' not found in " .. toolName .. "!",
                     Duration = 4
@@ -834,7 +822,7 @@ return function(Env)
             end
             repTime.Value = v and enabledValue or disabledValue
             playInterfaceSound("NotificationSound")
-            Notifier({
+            Rayfield:Notify({
                 Title = "Notification",
                 Content = "Fast " .. toolName .. " Speed has been " .. (v and "enabled!" or "disabled!"),
                 Duration = 3
