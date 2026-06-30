@@ -6,12 +6,14 @@ return function(Env)
 	local StatusTab = Env.Tabs.Status
 	local SettingsTab = Env.Tabs.Settings
 	local MiscTab = Env.Tabs.Misc
-    local MainTab = Env.Tabs.Main
+    local GymTab = Env.Tabs.Gym
+    local LiftingTab = Env.Tabs.Lifting
     local player = Env.player
     local playInterfaceSound = Env.playInterfaceSound
     local Notifier = Env.Notifier
     local RS = Env.RS
     local rEvents = Env.rEvents
+    local Rayfield = Env.Rayfield,
 
     return function(Env)
     print("Cloud Oxygen Hub: Loading GymFarm.Lua")
@@ -529,8 +531,6 @@ return function(Env)
     -- ИНТЕРФЕЙС: ВКЛАДКА GYM
     -- =============================================================================
 
-    local GymTab = Tabs.Gym
-
     -- Секция тренажёров
     local gymSection = GymTab:CreateSection("Gym Machines")
 
@@ -739,8 +739,6 @@ return function(Env)
     -- ИНТЕРФЕЙС: ВКЛАДКА LIFTING
     -- =============================================================================
 
-    local LiftingTab = Tabs.Lifting
-
     -- Секция: Auto Lift
     local liftSection = LiftingTab:CreateSection("Lifting")
 
@@ -936,22 +934,38 @@ return function(Env)
 
     -- Вспомогательная функция для изменения скорости
     local function setToolSpeed(toolName, valueName, enabledValue, disabledValue)
-	    return function(v)
-	        playInterfaceSound("ButtonClick")
-	        local character = player.Character or player.CharacterAdded:Wait()
-	        local item = character:FindFirstChild(toolName) or player:WaitForChild("Backpack"):FindFirstChild(toolName)
-	        
-	        local repTime = item:FindFirstChild(valueName)
-	        
-	        repTime.Value = v and enabledValue or disabledValue
-	        playInterfaceSound("NotificationSound")
-	        Notifier({
-	            Title = "Notification",
-	            Content = "Fast " .. toolName .. " Speed has been " .. (v and "enabled!" or "disabled!"),
-	            Duration = 3
-	        })
-	    end
-	end
+        return function(v)
+            playInterfaceSound("ButtonClick")
+            local character = player.Character or player.CharacterAdded:Wait()
+            local item = character:FindFirstChild(toolName) or player:WaitForChild("Backpack"):FindFirstChild(toolName)
+            if not item then
+                playInterfaceSound("ErrorSound")
+                Notifier({
+                    Title = "Error",
+                    Content = "Item '" .. toolName .. "' not found in inventory or hands!",
+                    Duration = 4
+                })
+                return
+            end
+            local repTime = item:FindFirstChild(valueName)
+            if not repTime then
+                playInterfaceSound("ErrorSound")
+                Notifier({
+                    Title = "Error",
+                    Content = "'" .. valueName .. "' not found in " .. toolName .. "!",
+                    Duration = 4
+                })
+                return
+            end
+            repTime.Value = v and enabledValue or disabledValue
+            playInterfaceSound("NotificationSound")
+            Notifier({
+                Title = "Notification",
+                Content = "Fast " .. toolName .. " Speed has been " .. (v and "enabled!" or "disabled!"),
+                Duration = 3
+            })
+        end
+    end
 
     speedSection:CreateToggle({
         Name = "Fast Punch Speed",
