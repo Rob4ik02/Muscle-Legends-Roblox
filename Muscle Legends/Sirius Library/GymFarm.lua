@@ -15,7 +15,6 @@ return function(Env)
     local rEvents = Env.rEvents
     local Rayfield = Env.Rayfield,
 
-    return function(Env)
     print("Cloud Oxygen Hub: Loading GymFarm.Lua")
 
     -- Основные сервисы и переменные
