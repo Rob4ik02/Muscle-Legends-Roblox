@@ -524,7 +524,7 @@ return function(Env)
     -- =============================================================================
 
     -- Секция тренажёров
-    GymTab:CreateSection("Gym Machines")
+    local Label = GymTab:CreateLabel("Gym Machines", "library")
 
     local GymsList = {
         { Name = "Beach Gym", Code = "Beach" },
@@ -685,6 +685,8 @@ return function(Env)
     -- =============================================================================
     -- ROCK FARMING
     -- =============================================================================
+
+    local Label2 = GymTab:CreateLabel("Rock Machines", "library")
 
     GymTab:CreateSection("Rock Farming")
 
