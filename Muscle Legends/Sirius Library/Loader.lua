@@ -148,7 +148,13 @@ end
 
 wait(1)
 print(" OXYGEN SYSTEM: Loading External Module 'VerifyPlayer.lua'")
+loadExternalModule("https://raw.githubusercontent.com/Rob4ik02/Muscle-Legends-Roblox/refs/heads/main/Muscle%20Legends/Sirius%20Library/Home.lua", Env)
+wait(1)
+print(" OXYGEN SYSTEM: Loading External Module 'VerifyPlayer.lua'")
 loadExternalModule("https://raw.githubusercontent.com/Rob4ik02/Muscle-Legends-Roblox/refs/heads/main/Muscle%20Legends/Sirius%20Library/GymFarm.lua", Env)
+wait(1)
+print(" OXYGEN SYSTEM: Loading External Module 'VerifyPlayer.lua'")
+loadExternalModule("https://raw.githubusercontent.com/Rob4ik02/Muscle-Legends-Roblox/refs/heads/main/Muscle%20Legends/Sirius%20Library/Rebirth.lua", Env)
 
 playInterfaceSound("LoadedSound")
 
