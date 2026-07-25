@@ -1,5 +1,5 @@
 print("Executed Script!")
-warn(" V 1.0.1 ")
+warn(" V 1.0.2 ") -- Версия обновлена
 
 -- // localization \\ --
 local players = game:GetService("Players")
@@ -13,9 +13,9 @@ _G.whitelistedPlayers = _G.whitelistedPlayers or {}
 _G.blacklistedPlayers = _G.blacklistedPlayers or {}
 
 -- =======================================================
--- ВНИМАНИЕ: СЮДА ВСТАВЬ ССЫЛКУ НА СВОЙ СЕРВЕР!
+-- ВНИМАНИЕ: ССЫЛКА БЕЗ СЛЕША НА КОНЦЕ! (ИСПРАВЛЕНО)
 -- =======================================================
-local WEB_SERVER_URL = "https://global-scripts-development.onrender.com/" 
+local WEB_SERVER_URL = "https://global-scripts-development.onrender.com"
 
 -- // Загрузка звуков \\ --
 local sounds = {
@@ -95,8 +95,8 @@ local Window = Rayfield:CreateWindow({
         GrabKeyFromSite = false, 
         Key = {"OVERRIDE_DEVELOPER_KEY_666"}, 
         
-        -- Кастомная проверка ключа через твой веб-сервер
-       KeyCheck = function(EnteredKey)
+        -- Исправленная проверка ключа с продвинутым дебагом
+        KeyCheck = function(EnteredKey)
             local requestFunc = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
             local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
             
@@ -106,7 +106,6 @@ local Window = Rayfield:CreateWindow({
                 user = player.Name
             })
             
-            -- БЕЗОПАСНЫЙ ВЫЗОВ: предотвращает краш, если сайт недоступен
             local successReq, response = pcall(function()
                 if requestFunc then
                     return requestFunc({
@@ -122,6 +121,7 @@ local Window = Rayfield:CreateWindow({
             end)
 
             if not successReq or not response then
+                warn("OXYGEN SYSTEM ERROR: Request failed. Ensure the server is online. Details: " .. tostring(response))
                 Rayfield:Notify({
                     Title = "Connection Error",
                     Content = "Не удалось связаться с сервером ключей. Сайт выключен или запрос заблокирован.",
@@ -131,32 +131,39 @@ local Window = Rayfield:CreateWindow({
                 return false
             end
 
-            if response and response.Body then
-                local successDec, decoded = pcall(function()
-                    return HttpService:JSONDecode(response.Body)
-                end)
-                
-                if successDec and decoded and decoded.valid then
-                    Rayfield:Notify({
-                        Title = "Access Granted!",
-                        Content = "Welcome back, " .. decoded.user .. "!",
-                        Duration = 5,
-                        Image = 4483362458,
-                    })
-                    return true
-                else
-                    local errMsg = (decoded and decoded.message) or "Invalid Key or Server Offline"
-                    Rayfield:Notify({
-                        Title = "Access Denied",
-                        Content = errMsg,
-                        Duration = 5,
-                        Image = 4483362458,
-                    })
-                    return false
-                end
+            local successDec, decoded = pcall(function()
+                return HttpService:JSONDecode(response.Body)
+            end)
+            
+            if not successDec then
+                warn("OXYGEN SYSTEM ERROR: Failed to parse JSON. Server returned: " .. tostring(response.Body))
+                Rayfield:Notify({
+                    Title = "Server Error",
+                    Content = "Сервер вернул неверный ответ. Проверь консоль (F9).",
+                    Duration = 6,
+                    Image = 4483362458,
+                })
+                return false
             end
             
-            return false
+            if decoded.valid then
+                Rayfield:Notify({
+                    Title = "Access Granted!",
+                    Content = "Welcome back, " .. decoded.user .. "!",
+                    Duration = 5,
+                    Image = 4483362458,
+                })
+                return true
+            else
+                local errMsg = (decoded and decoded.message) or "Invalid Key or Server Offline"
+                Rayfield:Notify({
+                    Title = "Access Denied",
+                    Content = errMsg,
+                    Duration = 5,
+                    Image = 4483362458,
+                })
+                return false
+            end
         end
     }
 })
@@ -181,7 +188,7 @@ local Tabs = {
 -- =============================================================================
 
 local Env = {
-    LibraryUi = nil, -- Если у тебя есть LibraryUi, добавь его
+    LibraryUi = nil, 
     Window = Window,
     Tabs = Tabs,
     player = player,
@@ -216,7 +223,7 @@ local function loadExternalModule(url, env)
         if type(result) == "function" then
             result(env) -- Передаем Env
         else
-            warn("OXYGEN SYSTEM: Module " .. url .. " wasn't back the answer!")
+            warn("OXYGEN SYSTEM: Module " .. url .. " wasn't back the answer! (Make sure the GitHub file ends with 'return function(Env) ... end')")
         end
     else
         warn("OXYGEN SYSTEM: Module isn't loaded!" .. url .. "\n" .. tostring(result))
@@ -264,7 +271,6 @@ task.wait(5)
 
 playInterfaceSound("NotificationSound")
 
--- Исправленная ошибка с Tab -> Tabs.Home
 local Divider = Tabs.Home:CreateDivider()
 
 Rayfield:Notify({
