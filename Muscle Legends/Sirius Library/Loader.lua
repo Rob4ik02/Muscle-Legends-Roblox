@@ -96,7 +96,7 @@ local Window = Rayfield:CreateWindow({
         Key = {"OVERRIDE_DEVELOPER_KEY_666"}, 
         
         -- Кастомная проверка ключа через твой веб-сервер
-        KeyCheck = function(EnteredKey)
+       KeyCheck = function(EnteredKey)
             local requestFunc = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
             local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
             
@@ -106,25 +106,37 @@ local Window = Rayfield:CreateWindow({
                 user = player.Name
             })
             
-            local response
-            if requestFunc then
-                response = requestFunc({
-                    Url = WEB_SERVER_URL .. "/api/verify_key",
-                    Method = "POST",
-                    Headers = { ["Content-Type"] = "application/json" },
-                    Body = payload
+            -- БЕЗОПАСНЫЙ ВЫЗОВ: предотвращает краш, если сайт недоступен
+            local successReq, response = pcall(function()
+                if requestFunc then
+                    return requestFunc({
+                        Url = WEB_SERVER_URL .. "/api/verify_key",
+                        Method = "POST",
+                        Headers = { ["Content-Type"] = "application/json" },
+                        Body = payload
+                    })
+                else
+                    local rawResp = game:HttpGet(WEB_SERVER_URL .. "/api/verify_key?key=" .. EnteredKey .. "&hwid=" .. hwid)
+                    return { Body = rawResp, StatusCode = 200 }
+                end
+            end)
+
+            if not successReq or not response then
+                Rayfield:Notify({
+                    Title = "Connection Error",
+                    Content = "Не удалось связаться с сервером ключей. Сайт выключен или запрос заблокирован.",
+                    Duration = 6,
+                    Image = 4483362458,
                 })
-            else
-                local rawResp = game:HttpGet(WEB_SERVER_URL .. "/api/verify_key?key=" .. EnteredKey .. "&hwid=" .. hwid)
-                response = { Body = rawResp }
+                return false
             end
 
             if response and response.Body then
-                local success, decoded = pcall(function()
+                local successDec, decoded = pcall(function()
                     return HttpService:JSONDecode(response.Body)
                 end)
                 
-                if success and decoded and decoded.valid then
+                if successDec and decoded and decoded.valid then
                     Rayfield:Notify({
                         Title = "Access Granted!",
                         Content = "Welcome back, " .. decoded.user .. "!",
