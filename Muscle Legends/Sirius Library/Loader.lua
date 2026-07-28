@@ -1,5 +1,5 @@
 print("Executed Script!")
-warn(" V 1.0.3 - SECURITY UPDATE ")
+warn(" V 1.1.0 - REBRAND & THEME UPDATE ")
 
 -- // localization \\ --
 local players = game:GetService("Players")
@@ -53,25 +53,25 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 task.wait(1)
 playInterfaceSound("LoadingSound")
-print(" OXYGEN SYSTEM: Welcome to console! The Script is loading now..")
+print(" GLOBAL SCRIPTS: Welcome to console! The Script is loading now..")
 task.wait(0.5)
-warn(" OXYGEN SYSTEM: The script can maybe not loaded if your exploit not strong possible!")
+warn(" GLOBAL SCRIPTS: The script may not load if your exploit is not powerful enough!")
 
 -- // Создание Окна \\ --
 local Window = Rayfield:CreateWindow({
-   Name = "Oxygen Hub | Muscle Legends",
+   Name = "Global Scripts | Muscle Legends",
    Icon = 102643647961511, 
-   LoadingTitle = "Oxygen Projects",
-   LoadingSubtitle = "by Oxygen Development",
+   LoadingTitle = "Global Scripts",
+   LoadingSubtitle = "by Global Development",
    ShowText = "Muscle Legends", 
-   Theme = "DarkBlue",
+   Theme = "Default",
    ToggleUIKeybind = "K", 
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = false, 
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = "GlobalScriptsHub", 
-      FileName = "OxygenHub"
+      FolderName = "GlobalScripts", 
+      FileName = "GlobalScriptsHub"
    },
    Discord = { Enabled = false, Invite = "noinvitelink", RememberJoins = true },
    -- ОТКЛЮЧАЕМ БАГОВАННУЮ СИСТЕМУ РЕЙФИЛДА И ДЕЛАЕМ СВОЮ НИЖЕ!
@@ -83,7 +83,7 @@ local Window = Rayfield:CreateWindow({
 -- =============================================================================
 
 local isVerified = false
-local KeyFileName = "OxygenKey_Saved.txt"
+local KeyFileName = "GlobalScriptsKey_Saved.txt"
 
 -- Создаем стартовую вкладку (будет видна только она до проверки ключа)
 local AuthTab = Window:CreateTab("Authentication", "lock")
@@ -117,15 +117,15 @@ local function LoadMainScript()
 
     local function loadExternalModule(url, env)
         local success, scriptContent = pcall(function() return game:HttpGet(url) end)
-        if not success then warn("OXYGEN SYSTEM: Bad internet: " .. url); return end
+        if not success then warn("GLOBAL SCRIPTS: Bad internet: " .. url); return end
         
         local func, err = loadstring(scriptContent)
-        if not func then warn("OXYGEN SYSTEM: Syntax Error: " .. url .. "\n" .. tostring(err)); return end
+        if not func then warn("GLOBAL SCRIPTS: Syntax Error: " .. url .. "\n" .. tostring(err)); return end
         
         local successExec, result = pcall(func)
         if successExec then
-            if type(result) == "function" then result(env) else warn("OXYGEN SYSTEM: File didn't return function: " .. url) end
-        else warn("OXYGEN SYSTEM: Module crash: " .. url .. "\n" .. tostring(result)) end
+            if type(result) == "function" then result(env) else warn("GLOBAL SCRIPTS: File didn't return function: " .. url) end
+        else warn("GLOBAL SCRIPTS: Module crash: " .. url .. "\n" .. tostring(result)) end
     end
 
     -- Загрузка твоих скриптов с GitHub
@@ -133,7 +133,7 @@ local function LoadMainScript()
     local files = { "Home.lua", "GymFarm.lua", "Rebirth.lua", "EatAll.lua", "SpinFortune.lua", "GiftClaim.lua", "ShopBuy.lua", "KillPlrs.lua", "EspPlrs.lua", "Status.lua", "KeyTab.lua" }
     
     for _, file in ipairs(files) do
-        print(" OXYGEN SYSTEM: Loading " .. file)
+        print(" GLOBAL SCRIPTS: Loading " .. file)
         loadExternalModule(baseUrl .. file, Env)
         task.wait(0.2)
     end
@@ -145,7 +145,7 @@ local function LoadMainScript()
     local setDivider = Tabs.Home:CreateDivider()
 
     Rayfield:Notify({
-       Title = "Oxygen Hub",
+       Title = "Global Scripts",
        Content = "Script Loaded! Enjoy the script!",
        Duration = 5,
        Image = 4483362458,
