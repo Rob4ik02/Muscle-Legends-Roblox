@@ -3,11 +3,13 @@ return function(Env)
     local player = Env.player
     local Players = game:GetService("Players")
 
+    
     print("Global Scripts: Loading Status.lua")
     print("Global Scripts: 0 / 1 Status.lua")
 
-    StatusTab:CreateLabel("Player Stats Spy", "user-search")
-    StatusTab:CreateSection("Select a player to view their statistics.")
+    StatusTab:CreateSection("")
+    StatusTab:CreateLabel("Status Plr Category", "user-search")
+    StatusTab:CreateSection("Status Player")
 
     -- // Функции форматирования чисел (взяты из чужого скрипта) \\ --
     local function FormatNumberWithCommas(number)
@@ -36,6 +38,14 @@ return function(Env)
 
     -- // UI Элементы \\ --
     local selectedPlayerName = nil
+    local playerDropdown -- Предварительно объявляем переменную
+
+    -- Функция обновления списка игроков в дропдауне
+    local function updatePlayerDropdown()
+        if playerDropdown then -- Проверяем, что дропдаун уже создан
+            playerDropdown:SetOptions(getPlayerDisplayNames())
+        end
+    end
     
     local function getPlayerDisplayNames()
         local names = {}
@@ -45,7 +55,7 @@ return function(Env)
         return names
     end
 
-    local playerDropdown = StatusTab:CreateDropdown({
+    playerDropdown = StatusTab:CreateDropdown({
         Name = "Select Player",
         Options = getPlayerDisplayNames(),
         CurrentOption = {},
@@ -114,10 +124,6 @@ return function(Env)
             end
         end
     end)
-
-    local function updatePlayerDropdown()
-        playerDropdown:SetOptions(getPlayerDisplayNames())
-    end
 
     Players.PlayerAdded:Connect(updatePlayerDropdown)
     Players.PlayerRemoving:Connect(updatePlayerDropdown)
