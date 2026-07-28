@@ -540,6 +540,7 @@ return function(Env)
     }
 
     for _, gymInfo in ipairs(GymsList) do
+        GymTab:CreateSection(gymInfo.Name)
 
         -- Bench Press
         GymTab:CreateToggle({
